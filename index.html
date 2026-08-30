@@ -2,19 +2,21 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador de Juros Compostos</title>
+
 <style>
 * {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f3f6fa;
     color: #222;
 }
+
 header {
     background:
     linear-gradient(
@@ -26,20 +28,24 @@ header {
     text-align: center;
     padding: 40px 20px;
 }
+
 header h1 {
     margin: 0;
     font-size: 30px;
 }
+
 header p {
     margin-top: 10px;
     font-size: 16px;
     opacity: .9;
 }
+
 .container {
     max-width: 950px;
     margin: 30px auto;
     padding: 0 20px;
 }
+
 .card {
     background: white;
     padding: 25px;
@@ -49,49 +55,57 @@ header p {
     0 8px 25px
     rgba(0,0,0,.08);
 }
+
 .card h2 {
     margin-top: 0;
     color: #2563eb;
 }
+
 label {
     display: block;
     margin-top: 15px;
     margin-bottom: 6px;
     font-weight: bold;
 }
+
 /* =========================
    CAMPOS
 ========================= */
+
 .campo-moeda {
     position: relative;
 }
+
 .campo-moeda span {
     position: absolute;
     left: 13px;
     top: 50%;
-    transform:
-    translateY(-50%);
+    transform: translateY(-50%);
     font-weight: bold;
     color: #555;
 }
+
 .campo-moeda input {
     padding-left: 45px;
 }
+
 input {
     width: 100%;
     padding: 13px;
-    border:
-    1px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 16px;
     outline: none;
 }
+
 input:focus {
     border-color: #2563eb;
 }
+
 /* =========================
-   BOTÃO
+   BOTÕES
 ========================= */
+
 button {
     width: 100%;
     margin-top: 25px;
@@ -109,47 +123,123 @@ button {
     font-weight: bold;
     cursor: pointer;
 }
+
 button:hover {
     opacity: .9;
 }
+
+.botao-avancado {
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed,
+        #5b21b6
+    );
+}
+
+.botao-voltar {
+    background: #64748b;
+}
+
+/* =========================
+   AVANÇADO
+========================= */
+
+#areaAvancada {
+    display: none;
+}
+
+.info-avancado {
+    background: #f5f3ff;
+    border-left: 4px solid #7c3aed;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.fases {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.fase {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.fase h3 {
+    margin-top: 0;
+    color: #7c3aed;
+}
+
 /* =========================
    RESULTADOS
 ========================= */
+
 .resultados {
     display: grid;
     grid-template-columns:
     repeat(3,1fr);
     gap: 15px;
 }
+
 .resultado {
     background: #f8fafc;
     padding: 20px;
     border-radius: 12px;
     text-align: center;
 }
+
 .resultado span {
     display: block;
     color: #666;
     font-size: 14px;
     margin-bottom: 8px;
 }
+
 .resultado strong {
     font-size: 20px;
     color: #2563eb;
 }
+
+/* =========================
+   DESTAQUE AVANÇADO
+========================= */
+
+.destaque-avancado {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: #f5f3ff;
+    border-radius: 12px;
+    border-left: 5px solid #7c3aed;
+}
+
+.destaque-avancado strong {
+    color: #7c3aed;
+}
+
 /* =========================
    GRÁFICO
 ========================= */
+
 .grafico-container {
     position: relative;
     width: 100%;
     height: 420px;
 }
+
 canvas {
     width: 100%;
     height: 100%;
 }
+
 /* LEGENDA */
+
 .legenda {
     display: flex;
     justify-content: center;
@@ -157,242 +247,525 @@ canvas {
     margin-top: 15px;
     font-size: 14px;
 }
+
 .item-legenda {
     display: flex;
     align-items: center;
     gap: 7px;
 }
+
 .ponto {
     width: 12px;
     height: 12px;
     border-radius: 50%;
 }
+
 .patrimonio {
     background: #2563eb;
 }
+
 .aportes {
     background: #777;
 }
+
 /* =========================
    TABELA
 ========================= */
+
 .tabela {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
+
 .tabela th,
 .tabela td {
     padding: 12px 8px;
-    border-bottom:
-    1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     text-align: right;
 }
+
 .tabela th:first-child,
 .tabela td:first-child {
     text-align: left;
 }
+
 .tabela th {
     background: #f1f5f9;
 }
+
 .tabela tr:hover {
     background: #f8fafc;
 }
+
 /* =========================
    RODAPÉ
 ========================= */
+
 footer {
     text-align: center;
     padding: 25px;
     color: #777;
     font-size: 14px;
 }
+
 /* =========================
    CELULAR
 ========================= */
+
 @media (max-width: 650px) {
+
     header h1 {
         font-size: 25px;
     }
+
     .resultados {
         grid-template-columns: 1fr;
     }
+
+    .fases {
+        grid-template-columns: 1fr;
+    }
+
     .grafico-container {
         height: 330px;
     }
+
     .tabela {
         font-size: 13px;
     }
 }
 </style>
 </head>
+
 <body>
+
 <header>
+
 <h1>
 💰 Simulador de Juros Compostos
 </h1>
+
 <p>
 O futuro vai chegar.
 Descubra quanto seu dinheiro pode valer até lá.
 </p>
+
 </header>
+
+
 <div class="container">
+
+
 <!-- =========================
-     SIMULADOR
+     SIMULADOR NORMAL
 ========================= -->
+
 <div class="card">
+
 <h2>
 📊 Faça sua simulação
 </h2>
+
 <label>
 Valor inicial
 </label>
+
 <div class="campo-moeda">
+
 <span>R$</span>
+
 <input
 type="text"
 id="inicial"
 value="5.000,00"
 inputmode="decimal">
+
 </div>
+
+
 <label>
 Aporte mensal
 </label>
+
 <div class="campo-moeda">
+
 <span>R$</span>
+
 <input
 type="text"
 id="aporte"
 value="5.000,00"
 inputmode="decimal">
+
 </div>
+
+
 <label>
 Taxa de juros ao ano (%)
 </label>
+
 <input
 type="text"
 id="taxa"
 value="12"
 inputmode="decimal">
+
+
 <label>
 Tempo (anos)
 </label>
+
 <input
 type="number"
 id="anos"
 value="10"
 min="1"
 max="100">
+
+
 <button onclick="calcular()">
 🚀 Calcular investimento
 </button>
+
+
+<button
+class="botao-avancado"
+onclick="mostrarAvancado()">
+
+⚙️ Simulação Avançada
+
+</button>
+
 </div>
+
+
+<!-- =========================
+     SIMULAÇÃO AVANÇADA
+========================= -->
+
+<div
+class="card"
+id="areaAvancada">
+
+<h2>
+⚙️ Simulação Avançada
+</h2>
+
+<div class="info-avancado">
+
+<strong>Como funciona?</strong>
+
+<br><br>
+
+Você pode escolher por quanto tempo fará
+os aportes e depois deixar o patrimônio
+continuar rendendo sem colocar mais dinheiro.
+
+<br><br>
+
+Exemplo:
+
+<strong>
+R$ 5.000 por mês durante 3 anos
+</strong>
+
+e depois deixar o dinheiro rendendo
+por mais 7 anos.
+
+</div>
+
+
+<div class="fases">
+
+<div class="fase">
+
+<h3>
+💰 Fase de aportes
+</h3>
+
+<label>
+Aportar durante (anos)
+</label>
+
+<input
+type="number"
+id="anosAporte"
+value="3"
+min="1"
+max="100">
+
+</div>
+
+
+<div class="fase">
+
+<h3>
+📈 Fase de crescimento
+</h3>
+
+<label>
+Tempo total da simulação (anos)
+</label>
+
+<input
+type="number"
+id="anosTotal"
+value="10"
+min="1"
+max="100">
+
+</div>
+
+</div>
+
+
+<button
+onclick="calcularAvancado()">
+
+🚀 Calcular simulação avançada
+
+</button>
+
+
+<button
+class="botao-voltar"
+onclick="esconderAvancado()">
+
+← Voltar para simulação normal
+
+</button>
+
+</div>
+
+
 <!-- =========================
      RESULTADOS
 ========================= -->
+
 <div class="card">
+
 <h2>
 💎 Resultado
 </h2>
+
 <div class="resultados">
+
 <div class="resultado">
+
 <span>
 Total investido
 </span>
+
 <strong id="totalInvestido">
 R$ 0,00
 </strong>
+
 </div>
+
+
 <div class="resultado">
+
 <span>
 Juros ganhos
 </span>
+
 <strong id="juros">
 R$ 0,00
 </strong>
+
 </div>
+
+
 <div class="resultado">
+
 <span>
 Patrimônio final
 </span>
+
 <strong id="final">
 R$ 0,00
 </strong>
+
 </div>
+
 </div>
+
+
+<!-- RESULTADO ESPECIAL -->
+
+<div
+class="destaque-avancado"
+id="destaqueAvancado">
+
+<strong>
+📈 O poder de parar de aportar
+</strong>
+
+<br><br>
+
+Depois do período de aportes,
+seu dinheiro continuou rendendo
+sozinho.
+
+<br><br>
+
+<strong>
+Patrimônio quando os aportes terminaram:
+</strong>
+
+<span id="patrimonioFimAportes">
+R$ 0,00
+</span>
+
+<br><br>
+
+<strong>
+Patrimônio no final da simulação:
+</strong>
+
+<span id="patrimonioFinalAvancado">
+R$ 0,00
+</span>
+
+<br><br>
+
+<strong>
+Crescimento sem novos aportes:
+</strong>
+
+<span id="crescimentoSemAportes">
+R$ 0,00
+</span>
+
 </div>
+
+</div>
+
+
 <!-- =========================
      GRÁFICO
 ========================= -->
+
 <div class="card">
+
 <h2>
 📈 Evolução do patrimônio
 </h2>
+
 <p>
 Veja a evolução do seu dinheiro ao longo dos anos.
 </p>
+
 <div class="grafico-container">
+
 <canvas id="grafico"></canvas>
+
 </div>
+
+
 <div class="legenda">
+
 <div class="item-legenda">
+
 <div class="ponto patrimonio"></div>
+
 Patrimônio
+
 </div>
+
+
 <div class="item-legenda">
+
 <div class="ponto aportes"></div>
+
 Total investido
+
 </div>
+
 </div>
+
 </div>
+
+
 <!-- =========================
      TABELA ANUAL
 ========================= -->
+
 <div class="card">
+
 <h2>
 📅 Evolução ano a ano
 </h2>
+
 <table class="tabela">
+
 <thead>
+
 <tr>
+
 <th>
 Ano
 </th>
+
 <th>
 Investido
 </th>
+
 <th>
 Juros
 </th>
+
 <th>
 Patrimônio
 </th>
+
 </tr>
+
 </thead>
+
 <tbody id="tabela">
 </tbody>
+
 </table>
+
 </div>
+
+
 </div>
+
+
 <footer>
+
 Simulador de Juros Compostos © 2026
+
 </footer>
+
+
 <script>
+
 /* =========================
    CONVERTER NÚMERO
 ========================= */
+
 function converterNumero(valor) {
+
     valor =
     valor
     .replace(/\./g,"")
     .replace(",",".")
     .replace(/[^\d.-]/g,"");
+
     return Number(valor) || 0;
 }
+
+
 /* =========================
    DINHEIRO
 ========================= */
+
 function dinheiro(valor) {
+
     return valor.toLocaleString(
         "pt-BR",
         {
@@ -401,158 +774,512 @@ function dinheiro(valor) {
         }
     );
 }
+
+
 /* =========================
-   CALCULAR
+   MOSTRAR AVANÇADO
 ========================= */
+
+function mostrarAvancado() {
+
+    document.getElementById(
+        "areaAvancada"
+    ).style.display = "block";
+
+    document
+    .getElementById("areaAvancada")
+    .scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================
+   ESCONDER AVANÇADO
+========================= */
+
+function esconderAvancado() {
+
+    document.getElementById(
+        "areaAvancada"
+    ).style.display = "none";
+
+    document.getElementById(
+        "destaqueAvancado"
+    ).style.display = "none";
+}
+
+
+/* =========================
+   CALCULAR NORMAL
+========================= */
+
 function calcular() {
+
     const inicial =
     converterNumero(
         document.getElementById(
             "inicial"
         ).value
     );
+
+
     const aporte =
     converterNumero(
         document.getElementById(
             "aporte"
         ).value
     );
+
+
     const taxaAnual =
     converterNumero(
         document.getElementById(
             "taxa"
         ).value
     );
+
+
     const anos =
     Number(
         document.getElementById(
             "anos"
         ).value
     );
+
+
     if (
         inicial < 0 ||
         aporte < 0 ||
         taxaAnual < 0 ||
         anos <= 0
     ) {
+
         alert(
             "Digite valores válidos."
         );
+
         return;
     }
-    /*
-       Taxa anual equivalente
-       convertida para mensal.
-    */
+
+
     const taxaMensal =
     Math.pow(
         1 + taxaAnual / 100,
         1 / 12
     ) - 1;
+
+
     const meses =
     anos * 12;
+
+
     let patrimonio =
     inicial;
+
+
     let totalInvestido =
     inicial;
+
+
     const patrimonioAnual =
     [patrimonio];
+
+
     const investidoAnual =
     [totalInvestido];
-    /*
-       Calcula mês a mês.
-    */
+
+
     for (
         let mes = 1;
         mes <= meses;
         mes++
     ) {
+
         patrimonio =
         patrimonio *
         (1 + taxaMensal);
+
+
         patrimonio +=
         aporte;
+
+
         totalInvestido +=
         aporte;
-        /*
-           Guarda o resultado
-           no final de cada ano.
-        */
+
+
         if (
             mes % 12 === 0
         ) {
+
             patrimonioAnual.push(
                 patrimonio
             );
+
             investidoAnual.push(
                 totalInvestido
             );
         }
     }
+
+
     const juros =
     patrimonio -
     totalInvestido;
-    /*
-       RESULTADOS
-    */
+
+
     document.getElementById(
         "totalInvestido"
     ).innerText =
     dinheiro(
         totalInvestido
     );
+
+
     document.getElementById(
         "juros"
     ).innerText =
     dinheiro(
         juros
     );
+
+
     document.getElementById(
         "final"
     ).innerText =
     dinheiro(
         patrimonio
     );
-    /*
-       GRÁFICO
-    */
+
+
+    document.getElementById(
+        "destaqueAvancado"
+    ).style.display = "none";
+
+
     criarGrafico(
         patrimonioAnual,
         investidoAnual
     );
-    /*
-       TABELA
-    */
+
+
     criarTabela(
         patrimonioAnual,
         investidoAnual
     );
 }
+
+
+/* =========================
+   CALCULAR AVANÇADO
+========================= */
+
+function calcularAvancado() {
+
+    const inicial =
+    converterNumero(
+        document.getElementById(
+            "inicial"
+        ).value
+    );
+
+
+    const aporte =
+    converterNumero(
+        document.getElementById(
+            "aporte"
+        ).value
+    );
+
+
+    const taxaAnual =
+    converterNumero(
+        document.getElementById(
+            "taxa"
+        ).value
+    );
+
+
+    const anosAporte =
+    Number(
+        document.getElementById(
+            "anosAporte"
+        ).value
+    );
+
+
+    const anosTotal =
+    Number(
+        document.getElementById(
+            "anosTotal"
+        ).value
+    );
+
+
+    if (
+        inicial < 0 ||
+        aporte < 0 ||
+        taxaAnual < 0 ||
+        anosAporte <= 0 ||
+        anosTotal <= 0
+    ) {
+
+        alert(
+            "Digite valores válidos."
+        );
+
+        return;
+    }
+
+
+    if (
+        anosAporte > anosTotal
+    ) {
+
+        alert(
+            "O período de aportes não pode ser maior que o tempo total da simulação."
+        );
+
+        return;
+    }
+
+
+    const taxaMensal =
+    Math.pow(
+        1 + taxaAnual / 100,
+        1 / 12
+    ) - 1;
+
+
+    const mesesTotal =
+    anosTotal * 12;
+
+
+    const mesesAporte =
+    anosAporte * 12;
+
+
+    let patrimonio =
+    inicial;
+
+
+    let totalInvestido =
+    inicial;
+
+
+    let patrimonioFimAportes =
+    inicial;
+
+
+    const patrimonioAnual =
+    [patrimonio];
+
+
+    const investidoAnual =
+    [totalInvestido];
+
+
+    for (
+        let mes = 1;
+        mes <= mesesTotal;
+        mes++
+    ) {
+
+        /*
+           O dinheiro rende
+           todos os meses.
+        */
+
+        patrimonio =
+        patrimonio *
+        (1 + taxaMensal);
+
+
+        /*
+           Aporte somente durante
+           a fase escolhida.
+        */
+
+        if (
+            mes <= mesesAporte
+        ) {
+
+            patrimonio +=
+            aporte;
+
+            totalInvestido +=
+            aporte;
+        }
+
+
+        /*
+           Guarda o patrimônio
+           quando os aportes terminam.
+        */
+
+        if (
+            mes === mesesAporte
+        ) {
+
+            patrimonioFimAportes =
+            patrimonio;
+        }
+
+
+        /*
+           Guarda cada ano.
+        */
+
+        if (
+            mes % 12 === 0
+        ) {
+
+            patrimonioAnual.push(
+                patrimonio
+            );
+
+            investidoAnual.push(
+                totalInvestido
+            );
+        }
+    }
+
+
+    const juros =
+    patrimonio -
+    totalInvestido;
+
+
+    const crescimentoSemAportes =
+    patrimonio -
+    patrimonioFimAportes;
+
+
+    /*
+       RESULTADOS
+    */
+
+    document.getElementById(
+        "totalInvestido"
+    ).innerText =
+    dinheiro(
+        totalInvestido
+    );
+
+
+    document.getElementById(
+        "juros"
+    ).innerText =
+    dinheiro(
+        juros
+    );
+
+
+    document.getElementById(
+        "final"
+    ).innerText =
+    dinheiro(
+        patrimonio
+    );
+
+
+    /*
+       RESULTADO AVANÇADO
+    */
+
+    document.getElementById(
+        "patrimonioFimAportes"
+    ).innerText =
+    dinheiro(
+        patrimonioFimAportes
+    );
+
+
+    document.getElementById(
+        "patrimonioFinalAvancado"
+    ).innerText =
+    dinheiro(
+        patrimonio
+    );
+
+
+    document.getElementById(
+        "crescimentoSemAportes"
+    ).innerText =
+    dinheiro(
+        crescimentoSemAportes
+    );
+
+
+    document.getElementById(
+        "destaqueAvancado"
+    ).style.display =
+    "block";
+
+
+    /*
+       GRÁFICO
+    */
+
+    criarGrafico(
+        patrimonioAnual,
+        investidoAnual
+    );
+
+
+    /*
+       TABELA
+    */
+
+    criarTabela(
+        patrimonioAnual,
+        investidoAnual
+    );
+}
+
+
 /* =========================
    GRÁFICO
 ========================= */
+
 function criarGrafico(
     patrimonios,
     investidos
 ) {
+
     const canvas =
     document.getElementById(
         "grafico"
     );
+
+
     const ctx =
     canvas.getContext(
         "2d"
     );
+
+
     const largura =
     canvas.clientWidth;
+
+
     const altura =
     canvas.clientHeight;
+
+
     const dpr =
     window.devicePixelRatio || 1;
+
+
     canvas.width =
     largura * dpr;
+
+
     canvas.height =
     altura * dpr;
+
+
     ctx.setTransform(
         dpr,
         0,
@@ -561,94 +1288,158 @@ function criarGrafico(
         0,
         0
     );
+
+
     ctx.clearRect(
         0,
         0,
         largura,
         altura
     );
+
+
     const margemEsquerda =
     65;
+
+
     const margemDireita =
     20;
+
+
     const margemTopo =
     25;
+
+
     const margemBaixo =
     50;
+
+
     const graficoLargura =
     largura -
     margemEsquerda -
     margemDireita;
+
+
     const graficoAltura =
     altura -
     margemTopo -
     margemBaixo;
+
+
     const maior =
     Math.max(
         ...patrimonios
     );
+
+
+    /*
+       Evita problemas
+       quando tudo é zero.
+    */
+
+    const escala =
+    maior > 0
+    ? maior
+    : 1;
+
+
     /*
        Linhas horizontais
     */
+
     ctx.strokeStyle =
     "#e5e7eb";
-    ctx.lineWidth = 1;
-    const linhas = 5;
+
+
+    ctx.lineWidth =
+    1;
+
+
+    const linhas =
+    5;
+
+
     for (
         let i = 0;
         i <= linhas;
         i++
     ) {
+
         const y =
         margemTopo +
         (
             i / linhas
         ) *
         graficoAltura;
+
+
         ctx.beginPath();
+
+
         ctx.moveTo(
             margemEsquerda,
             y
         );
+
+
         ctx.lineTo(
             largura -
             margemDireita,
             y
         );
+
+
         ctx.stroke();
-        /*
-           Valores do eixo Y
-        */
+
+
         const valor =
-        maior -
+        escala -
         (
-            maior *
+            escala *
             i /
             linhas
         );
+
+
         ctx.fillStyle =
         "#666";
+
+
         ctx.font =
         "11px Arial";
+
+
         ctx.textAlign =
         "right";
+
+
         ctx.fillText(
             dinheiroCurto(valor),
             margemEsquerda - 8,
             y + 4
         );
     }
+
+
     /*
        Eixo X
     */
+
     ctx.fillStyle =
     "#666";
+
+
     ctx.font =
     "11px Arial";
+
+
     ctx.textAlign =
     "center";
+
+
     patrimonios.forEach(
         (valor,index) => {
+
             const x =
             margemEsquerda +
             (
@@ -656,6 +1447,8 @@ function criarGrafico(
                 (patrimonios.length - 1)
             ) *
             graficoLargura;
+
+
             ctx.fillText(
                 "Ano " + index,
                 x,
@@ -663,17 +1456,24 @@ function criarGrafico(
             );
         }
     );
+
+
     /*
        Função para desenhar linha
     */
+
     function desenharLinha(
         valores,
         linhaCor,
         pontCor
     ) {
+
         ctx.beginPath();
+
+
         valores.forEach(
             (valor,index) => {
+
                 const x =
                 margemEsquerda +
                 (
@@ -681,22 +1481,29 @@ function criarGrafico(
                     (valores.length - 1)
                 ) *
                 graficoLargura;
+
+
                 const y =
                 margemTopo +
                 graficoAltura -
                 (
                     valor /
-                    maior
+                    escala
                 ) *
                 graficoAltura;
+
+
                 if (
                     index === 0
                 ) {
+
                     ctx.moveTo(
                         x,
                         y
                     );
+
                 } else {
+
                     ctx.lineTo(
                         x,
                         y
@@ -704,16 +1511,26 @@ function criarGrafico(
                 }
             }
         );
+
+
         ctx.strokeStyle =
         linhaCor;
+
+
         ctx.lineWidth =
         3;
+
+
         ctx.stroke();
+
+
         /*
            Pontos
         */
+
         valores.forEach(
             (valor,index) => {
+
                 const x =
                 margemEsquerda +
                 (
@@ -721,15 +1538,21 @@ function criarGrafico(
                     (valores.length - 1)
                 ) *
                 graficoLargura;
+
+
                 const y =
                 margemTopo +
                 graficoAltura -
                 (
                     valor /
-                    maior
+                    escala
                 ) *
                 graficoAltura;
+
+
                 ctx.beginPath();
+
+
                 ctx.arc(
                     x,
                     y,
@@ -737,38 +1560,53 @@ function criarGrafico(
                     0,
                     Math.PI * 2
                 );
+
+
                 ctx.fillStyle =
                 pontCor;
+
+
                 ctx.fill();
             }
         );
     }
+
+
     /*
        Linha dos aportes
     */
+
     desenharLinha(
         investidos,
         "#777",
         "#777"
     );
+
+
     /*
        Linha do patrimônio
     */
+
     desenharLinha(
         patrimonios,
         "#2563eb",
         "#2563eb"
     );
 }
+
+
 /* =========================
    VALORES CURTOS
 ========================= */
+
 function dinheiroCurto(
     valor
 ) {
+
     if (
         valor >= 1000000
     ) {
+
         return (
             "R$ " +
             (
@@ -778,9 +1616,12 @@ function dinheiroCurto(
             " mi"
         );
     }
+
+
     if (
         valor >= 1000
     ) {
+
         return (
             "R$ " +
             (
@@ -790,68 +1631,96 @@ function dinheiroCurto(
             " mil"
         );
     }
+
+
     return dinheiro(
         valor
     );
 }
+
+
 /* =========================
    TABELA
 ========================= */
+
 function criarTabela(
     patrimonios,
     investidos
 ) {
+
     const tabela =
     document.getElementById(
         "tabela"
     );
+
+
     tabela.innerHTML =
     "";
+
+
     patrimonios.forEach(
         (patrimonio,index) => {
+
             const investido =
             investidos[index];
+
+
             const juros =
             patrimonio -
             investido;
+
+
             const linha =
             document.createElement(
                 "tr"
             );
+
+
             linha.innerHTML = `
                 <td>
                     ${index}
                 </td>
+
                 <td>
                     ${dinheiro(investido)}
                 </td>
+
                 <td>
                     ${dinheiro(juros)}
                 </td>
+
                 <td>
                     <strong>
                         ${dinheiro(patrimonio)}
                     </strong>
                 </td>
             `;
+
+
             tabela.appendChild(
                 linha
             );
         }
     );
 }
+
+
 /* =========================
    FORMATA CAMPOS
 ========================= */
+
 document
 .getElementById("inicial")
 .addEventListener(
     "blur",
     function() {
+
         const valor =
         converterNumero(
             this.value
         );
+
+
         this.value =
         valor.toLocaleString(
             "pt-BR",
@@ -862,15 +1731,20 @@ document
         );
     }
 );
+
+
 document
 .getElementById("aporte")
 .addEventListener(
     "blur",
     function() {
+
         const valor =
         converterNumero(
             this.value
         );
+
+
         this.value =
         valor.toLocaleString(
             "pt-BR",
@@ -881,10 +1755,15 @@ document
         );
     }
 );
+
+
 /* =========================
    INICIAR
 ========================= */
+
 calcular();
+
 </script>
+
 </body>
 </html>
