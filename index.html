@@ -1,33 +1,356 @@
 <!DOCTYPE html> <html lang="pt-BR"> <head> <meta charset="UTF-8">
-
 <meta
 name="viewport"
 content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 
-<meta name="theme-color" content="#111827"> <link rel="manifest" href="manifest.json">
-
+<meta name="theme-color" content="#111827">
 <meta
 name="description"
 content="Simulador de Juros Compostos para calcular investimentos, aportes e crescimento do patrimônio."
 
-<meta
-name="mobile-web-app-capable"
-content="yes"
+<title>Simulador de Juros Compostos</title> <style>
+{
+box-sizing: border-box;
+-webkit-tap-highlight-color: transparent;
+}
+html {
+scroll-behavior: smooth;
+}
 
-<meta
-name="apple-mobile-web-app-capable"
-content="yes"
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: #f3f6fa;
+color: #222;
+min-height: 100vh;
+padding-bottom: env(safe-area-inset-bottom);
+}
 
-<meta
-name="apple-mobile-web-app-status-bar-style"
-content="black-translucent"
+header {
+background: linear-gradient(135deg, #111827, #2563eb);
+color: white;
+text-align: center;
+padding: calc(32px + env(safe-area-inset-top)) 20px 35px;
+}
 
-<meta
-name="apple-mobile-web-app-title"
-content="Juros Compostos"
+header h1 {
+margin: 0;
+font-size: clamp(24px, 7vw, 30px);
+line-height: 1.2;
+}
 
-<title>Simulador de Juros Compostos</title> <style> * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; } html { scroll-behavior: smooth; } body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f3f6fa; color: #222; min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); } header { background: linear-gradient( 135deg, #111827, #2563eb ); color: white; text-align: center; padding: calc(32px + env(safe-area-inset-top)) 20px 35px; } header h1 { margin: 0; font-size: clamp(24px, 7vw, 30px); line-height: 1.2; } header p { margin: 12px auto 0; font-size: 16px; line-height: 1.5; opacity: .9; max-width: 600px; } .container { width: 100%; max-width: 950px; margin: 25px auto; padding: 0 15px; } .card { background: white; padding: 22px; border-radius: 18px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,.08); } .card h2 { margin: 0 0 20px; color: #2563eb; font-size: 21px; line-height: 1.3; } label { display: block; margin-top: 15px; margin-bottom: 7px; font-weight: bold; line-height: 1.3; } .campo-moeda { position: relative; } .campo-moeda span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-weight: bold; color: #555; pointer-events: none; } .campo-moeda input { padding-left: 45px; } input { width: 100%; padding: 14px; min-height: 48px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; outline: none; background: white; color: #222; appearance: none; } input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.12); } button { width: 100%; min-height: 50px; margin-top: 18px; padding: 14px 16px; border: none; border-radius: 10px; background: linear-gradient( 135deg, #2563eb, #1d4ed8 ); color: white; font-size: 16px; font-weight: bold; cursor: pointer; touch-action: manipulation; } button:active { transform: scale(.99); } .botao-avancado { background: linear-gradient( 135deg, #7c3aed, #5b21b6 ); } .botao-voltar { background: #64748b; } #areaAvancada { display: none; } .info-avancado { background: #f5f3ff; border-left: 4px solid #7c3aed; padding: 15px; border-radius: 10px; margin-bottom: 20px; line-height: 1.6; } .fases { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; } .fase { background: #f8fafc; padding: 18px; border-radius: 12px; border: 1px solid #e2e8f0; } .fase h3 { margin-top: 0; color: #7c3aed; font-size: 18px; } .resultados { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; } .resultado { background: #f8fafc; padding: 18px 12px; border-radius: 12px; text-align: center; } .resultado span { display: block; color: #666; font-size: 14px; margin-bottom: 8px; } .resultado strong { font-size: clamp( 18px, 5vw, 20px ); color: #2563eb; word-break: break-word; } .destaque-avancado { display: none; margin-top: 20px; padding: 18px; background: #f5f3ff; border-radius: 12px; border-left: 5px solid #7c3aed; line-height: 1.5; } .destaque-avancado strong { color: #7c3aed; } .grafico-container { position: relative; width: 100%; height: 380px; overflow: hidden; } canvas { display: block; width: 100%; height: 100%; } .legenda { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 15px; font-size: 14px; } .item-legenda { display: flex; align-items: center; gap: 7px; } .ponto { width: 12px; height: 12px; border-radius: 50%; } .patrimonio { background: #2563eb; } .aportes { background: #777; } .tabela-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; } .tabela { width: 100%; min-width: 560px; border-collapse: collapse; margin-top: 10px; } .tabela th, .tabela td { padding: 12px 8px; border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap; } .tabela th:first-child, .tabela td:first-child { text-align: left; } .tabela th { background: #f1f5f9; } .tabela tr:hover { background: #f8fafc; } footer { text-align: center; padding: 20px 15px; color: #777; font-size: 14px; } @media (max-width: 650px) { header { padding-left: 15px; padding-right: 15px; } .container { margin-top: 15px; padding: 0 10px; } .card { padding: 18px; border-radius: 15px; } .resultados { grid-template-columns: 1fr; } .fases { grid-template-columns: 1fr; } .grafico-container { height: 300px; } .card h2 { font-size: 20px; } } @media (max-width: 380px) { .card { padding: 15px; } .grafico-container { height: 270px; } header h1 { font-size: 23px; } } </style> </head> <body> <header> <h1> 💰 Simulador de Juros Compostos </h1> <p> O futuro vai chegar. Descubra quanto seu dinheiro pode valer até lá. </p> </header> <div class="container"> <div class="card"> <h2> 📊 Faça sua simulação </h2> <label> Valor inicial </label> <div class="campo-moeda">
+header p {
+margin: 12px auto 0;
+font-size: 16px;
+line-height: 1.5;
+opacity: .9;
+max-width: 600px;
+}
 
+.container {
+width: 100%;
+max-width: 950px;
+margin: 25px auto;
+padding: 0 15px;
+}
+
+.card {
+background: white;
+padding: 22px;
+border-radius: 18px;
+margin-bottom: 20px;
+box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.card h2 {
+margin: 0 0 20px;
+color: #2563eb;
+font-size: 21px;
+line-height: 1.3;
+}
+
+label {
+display: block;
+margin-top: 15px;
+margin-bottom: 7px;
+font-weight: bold;
+line-height: 1.3;
+}
+
+.campo-moeda {
+position: relative;
+}
+
+.campo-moeda span {
+position: absolute;
+left: 14px;
+top: 50%;
+transform: translateY(-50%);
+font-weight: bold;
+color: #555;
+pointer-events: none;
+}
+
+.campo-moeda input {
+padding-left: 45px;
+}
+
+input {
+width: 100%;
+padding: 14px;
+min-height: 48px;
+border: 1px solid #ccc;
+border-radius: 10px;
+font-size: 16px;
+outline: none;
+background: white;
+color: #222;
+appearance: none;
+}
+
+input:focus {
+border-color: #2563eb;
+box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+
+button {
+width: 100%;
+min-height: 50px;
+margin-top: 18px;
+padding: 14px 16px;
+border: none;
+border-radius: 10px;
+background: linear-gradient(135deg, #2563eb, #1d4ed8);
+color: white;
+font-size: 16px;
+font-weight: bold;
+cursor: pointer;
+touch-action: manipulation;
+}
+
+button:active {
+transform: scale(.99);
+}
+
+.botao-avancado {
+background: linear-gradient(135deg, #7c3aed, #5b21b6);
+}
+
+.botao-voltar {
+background: #64748b;
+}
+
+#areaAvancada {
+display: none;
+}
+
+.info-avancado {
+background: #f5f3ff;
+border-left: 4px solid #7c3aed;
+padding: 15px;
+border-radius: 10px;
+margin-bottom: 20px;
+line-height: 1.6;
+}
+
+.fases {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+}
+
+.fase {
+background: #f8fafc;
+padding: 18px;
+border-radius: 12px;
+border: 1px solid #e2e8f0;
+}
+
+.fase h3 {
+margin-top: 0;
+color: #7c3aed;
+font-size: 18px;
+}
+
+.resultados {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 12px;
+}
+
+.resultado {
+background: #f8fafc;
+padding: 18px 12px;
+border-radius: 12px;
+text-align: center;
+}
+
+.resultado span {
+display: block;
+color: #666;
+font-size: 14px;
+margin-bottom: 8px;
+}
+
+.resultado strong {
+font-size: clamp(18px, 5vw, 20px);
+color: #2563eb;
+word-break: break-word;
+}
+
+.destaque-avancado {
+display: none;
+margin-top: 20px;
+padding: 18px;
+background: #f5f3ff;
+border-radius: 12px;
+border-left: 5px solid #7c3aed;
+line-height: 1.5;
+}
+
+.destaque-avancado strong {
+color: #7c3aed;
+}
+
+.grafico-container {
+position: relative;
+width: 100%;
+height: 380px;
+overflow: hidden;
+}
+
+canvas {
+display: block;
+width: 100%;
+height: 100%;
+}
+
+.legenda {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 20px;
+margin-top: 15px;
+font-size: 14px;
+}
+
+.item-legenda {
+display: flex;
+align-items: center;
+gap: 7px;
+}
+
+.ponto {
+width: 12px;
+height: 12px;
+border-radius: 50%;
+}
+
+.patrimonio {
+background: #2563eb;
+}
+
+.aportes {
+background: #777;
+}
+
+.tabela-wrapper {
+width: 100%;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+border-radius: 10px;
+}
+
+.tabela {
+width: 100%;
+min-width: 560px;
+border-collapse: collapse;
+margin-top: 10px;
+}
+
+.tabela th,
+.tabela td {
+padding: 12px 8px;
+border-bottom: 1px solid #ddd;
+text-align: right;
+white-space: nowrap;
+}
+
+.tabela th:first-child,
+.tabela td:first-child {
+text-align: left;
+}
+
+.tabela th {
+background: #f1f5f9;
+}
+
+.tabela tr:hover {
+background: #f8fafc;
+}
+
+footer {
+text-align: center;
+padding: 20px 15px;
+color: #777;
+font-size: 14px;
+}
+
+@media (max-width: 650px) {
+
+header {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.container {
+    margin-top: 15px;
+    padding: 0 10px;
+}
+
+.card {
+    padding: 18px;
+    border-radius: 15px;
+}
+
+.resultados {
+    grid-template-columns: 1fr;
+}
+
+.fases {
+    grid-template-columns: 1fr;
+}
+
+.grafico-container {
+    height: 300px;
+}
+
+.card h2 {
+    font-size: 20px;
+}
+
+}
+
+@media (max-width: 380px) {
+
+.card {
+    padding: 15px;
+}
+
+.grafico-container {
+    height: 270px;
+}
+
+header h1 {
+    font-size: 23px;
+}
+
+}
+
+</style> </head> <body> <header> <h1>💰 Simulador de Juros Compostos</h1> <p> O futuro vai chegar. Descubra quanto seu dinheiro pode valer até lá. </p> </header> <div class="container"> <div class="card"> <h2>📊 Faça sua simulação</h2>
+<label>Valor inicial</label>
+
+<div class="campo-moeda">
 <span>R$</span>
 
 <input
@@ -37,8 +360,10 @@ value="5.000,00"
 inputmode="decimal"
 autocomplete="off"
 
-</div> <label> Aporte mensal </label> <div class="campo-moeda">
+</div>
+<label>Aporte mensal</label>
 
+<div class="campo-moeda">
 <span>R$</span>
 
 <input
@@ -48,7 +373,8 @@ value="5.000,00"
 inputmode="decimal"
 autocomplete="off"
 
-</div> <label> Taxa de juros ao ano (%) </label>
+</div>
+<label>Taxa de juros ao ano (%)</label>
 
 <input
 type="text"
@@ -57,7 +383,7 @@ value="12"
 inputmode="decimal"
 autocomplete="off"
 
-<label> Tempo (anos) </label>
+<label>Tempo (anos)</label>
 
 <input
 type="number"
@@ -68,7 +394,6 @@ max="100"
 inputmode="numeric"
 
 <button onclick="calcular()"> 🚀 Calcular investimento </button>
-
 <button
 class="botao-avancado"
 onclick="mostrarAvancado()"
@@ -76,7 +401,8 @@ onclick="mostrarAvancado()"
 ⚙️ Simulação Avançada
 </button>
 
-</div> <div class="card" id="areaAvancada" > <h2> ⚙️ Simulação Avançada </h2> <div class="info-avancado"> <strong> Como funciona? </strong>
+</div> <div class="card" id="areaAvancada"> <h2>⚙️ Simulação Avançada</h2> <div class="info-avancado">
+<strong>Como funciona?</strong>
 
 <br><br>
 
@@ -88,12 +414,13 @@ continuar rendendo sem colocar mais dinheiro.
 
 Exemplo:
 
-<strong> R$ 5.000 por mês durante 3 anos </strong>
+<strong>R$ 5.000 por mês durante 3 anos</strong>
 
 e depois deixar o dinheiro rendendo
 por mais 7 anos.
 
-</div> <div class="fases"> <div class="fase"> <h3> 💰 Fase de aportes </h3> <label> Aportar durante (anos) </label>
+</div> <div class="fases"> <div class="fase"> <h3>💰 Fase de aportes</h3>
+<label>Aportar durante (anos)</label>
 
 <input
 type="number"
@@ -103,7 +430,8 @@ min="1"
 max="100"
 inputmode="numeric"
 
-</div> <div class="fase"> <h3> 📈 Fase de crescimento </h3> <label> Tempo total da simulação (anos) </label>
+</div> <div class="fase"> <h3>📈 Fase de crescimento</h3>
+<label>Tempo total da simulação (anos)</label>
 
 <input
 type="number"
@@ -113,14 +441,7 @@ min="1"
 max="100"
 inputmode="numeric"
 
-</div> </div>
-
-<button
-onclick="calcularAvancado()"
-
-🚀 Calcular simulação avançada
-</button>
-
+</div> </div> <button onclick="calcularAvancado()"> 🚀 Calcular simulação avançada </button>
 <button
 class="botao-voltar"
 onclick="esconderAvancado()"
@@ -128,8 +449,16 @@ onclick="esconderAvancado()"
 ← Voltar para simulação normal
 </button>
 
-</div> <div class="card"> <h2> 💎 Resultado </h2> <div class="resultados"> <div class="resultado"> <span> Total investido </span> <strong id="totalInvestido"> R$ 0,00 </strong> </div> <div class="resultado"> <span> Juros ganhos </span> <strong id="juros"> R$ 0,00 </strong> </div> <div class="resultado"> <span> Patrimônio final </span> <strong id="final"> R$ 0,00 </strong> </div> </div> <div class="destaque-avancado" id="destaqueAvancado" > <strong> 📈 O poder de parar de aportar </strong>
+</div> <div class="card"> <h2>💎 Resultado</h2> <div class="resultados"> <div class="resultado">
+<span>Total investido</span>
 
+<strong id="totalInvestido"> R$ 0,00 </strong> </div> <div class="resultado">
+<span>Juros ganhos</span>
+
+<strong id="juros"> R$ 0,00 </strong> </div> <div class="resultado">
+<span>Patrimônio final</span>
+
+<strong id="final"> R$ 0,00 </strong> </div> </div> <div class="destaque-avancado" id="destaqueAvancado" > <strong> 📈 O poder de parar de aportar </strong>
 <br><br>
 
 Depois do período de aportes,
@@ -138,3 +467,761 @@ seu dinheiro continuou rendendo sozinho.
 <br><br>
 
 <strong> Patrimônio quando os aportes terminaram: </strong> <span id="patrimonioFimAportes"> R$ 0,00 </span>
+<br><br>
+
+<strong> Patrimônio no final da simulação: </strong> <span id="patrimonioFinalAvancado"> R$ 0,00 </span>
+<br><br>
+
+<strong> Crescimento sem novos aportes: </strong> <span id="crescimentoSemAportes"> R$ 0,00 </span> </div> </div> <div class="card"> <h2>📈 Evolução do patrimônio</h2> <p> Veja a evolução do seu dinheiro ao longo dos anos. </p> <div class="grafico-container">
+<canvas id="grafico"></canvas>
+
+</div> <div class="legenda"> <div class="item-legenda"> <div class="ponto patrimonio"></div>
+Patrimônio
+
+</div> <div class="item-legenda"> <div class="ponto aportes"></div>
+Total investido
+
+</div> </div> </div> <div class="card"> <h2>📅 Evolução ano a ano</h2> <div class="tabela-wrapper"> <table class="tabela"> <thead> <tr> <th>Ano</th> <th>Investido</th> <th>Juros</th> <th>Patrimônio</th> </tr> </thead> <tbody id="tabela"> </tbody> </table> </div> </div> </div> <footer>
+Simulador de Juros Compostos © 2026
+
+</footer> <script>
+function converterNumero(valor) {
+
+if (typeof valor !== "string") {
+    return Number(valor) || 0;
+}
+
+valor = valor
+    .replace(/[^\d,.-]/g, "")
+    .replace(/\./g, "")
+    .replace(",", ".");
+
+return Number(valor) || 0;
+
+}
+
+function dinheiro(valor) {
+
+return Number(valor).toLocaleString(
+    "pt-BR",
+    {
+        style: "currency",
+        currency: "BRL"
+    }
+);
+
+}
+
+function formatarCampoMoeda(elemento) {
+
+const valor =
+    converterNumero(elemento.value);
+
+elemento.value =
+    valor.toLocaleString(
+        "pt-BR",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+function mostrarAvancado() {
+
+const area =
+    document.getElementById(
+        "areaAvancada"
+    );
+
+area.style.display = "block";
+
+setTimeout(() => {
+
+    area.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}, 50);
+
+}
+
+function esconderAvancado() {
+
+document.getElementById(
+    "areaAvancada"
+).style.display = "none";
+
+document.getElementById(
+    "destaqueAvancado"
+).style.display = "none";
+
+}
+
+function validarDados(
+inicial,
+aporte,
+taxaAnual,
+anos
+) {
+
+if (
+    !Number.isFinite(inicial) ||
+    !Number.isFinite(aporte) ||
+    !Number.isFinite(taxaAnual) ||
+    !Number.isFinite(anos) ||
+    inicial < 0 ||
+    aporte < 0 ||
+    taxaAnual < 0 ||
+    anos <= 0
+) {
+
+    alert("Digite valores válidos.");
+
+    return false;
+}
+
+return true;
+
+}
+
+function calcular() {
+
+const inicial =
+    converterNumero(
+        document.getElementById("inicial").value
+    );
+
+const aporte =
+    converterNumero(
+        document.getElementById("aporte").value
+    );
+
+const taxaAnual =
+    converterNumero(
+        document.getElementById("taxa").value
+    );
+
+const anos =
+    Number(
+        document.getElementById("anos").value
+    );
+
+if (
+    !validarDados(
+        inicial,
+        aporte,
+        taxaAnual,
+        anos
+    )
+) {
+    return;
+}
+
+const taxaMensal =
+    Math.pow(
+        1 + taxaAnual / 100,
+        1 / 12
+    ) - 1;
+
+const meses =
+    Math.round(anos * 12);
+
+let patrimonio = inicial;
+let totalInvestido = inicial;
+
+const patrimonioAnual = [patrimonio];
+const investidoAnual = [totalInvestido];
+
+for (
+    let mes = 1;
+    mes <= meses;
+    mes++
+) {
+
+    patrimonio *=
+        (1 + taxaMensal);
+
+    patrimonio += aporte;
+
+    totalInvestido += aporte;
+
+    if (mes % 12 === 0) {
+
+        patrimonioAnual.push(
+            patrimonio
+        );
+
+        investidoAnual.push(
+            totalInvestido
+        );
+    }
+}
+
+const juros =
+    patrimonio - totalInvestido;
+
+document.getElementById(
+    "totalInvestido"
+).innerText = dinheiro(totalInvestido);
+
+document.getElementById(
+    "juros"
+).innerText = dinheiro(juros);
+
+document.getElementById(
+    "final"
+).innerText = dinheiro(patrimonio);
+
+document.getElementById(
+    "destaqueAvancado"
+).style.display = "none";
+
+criarGrafico(
+    patrimonioAnual,
+    investidoAnual
+);
+
+criarTabela(
+    patrimonioAnual,
+    investidoAnual
+);
+
+}
+
+function calcularAvancado() {
+
+const inicial =
+    converterNumero(
+        document.getElementById("inicial").value
+    );
+
+const aporte =
+    converterNumero(
+        document.getElementById("aporte").value
+    );
+
+const taxaAnual =
+    converterNumero(
+        document.getElementById("taxa").value
+    );
+
+const anosAporte =
+    Number(
+        document.getElementById("anosAporte").value
+    );
+
+const anosTotal =
+    Number(
+        document.getElementById("anosTotal").value
+    );
+
+if (
+    !validarDados(
+        inicial,
+        aporte,
+        taxaAnual,
+        anosTotal
+    ) ||
+    anosAporte <= 0
+) {
+
+    alert("Digite valores válidos.");
+
+    return;
+}
+
+if (anosAporte > anosTotal) {
+
+    alert(
+        "O período de aportes não pode ser maior que o tempo total da simulação."
+    );
+
+    return;
+}
+
+const taxaMensal =
+    Math.pow(
+        1 + taxaAnual / 100,
+        1 / 12
+    ) - 1;
+
+const mesesTotal =
+    Math.round(anosTotal * 12);
+
+const mesesAporte =
+    Math.round(anosAporte * 12);
+
+let patrimonio = inicial;
+let totalInvestido = inicial;
+let patrimonioFimAportes = inicial;
+
+const patrimonioAnual = [patrimonio];
+const investidoAnual = [totalInvestido];
+
+for (
+    let mes = 1;
+    mes <= mesesTotal;
+    mes++
+) {
+
+    patrimonio *=
+        (1 + taxaMensal);
+
+    if (mes <= mesesAporte) {
+
+        patrimonio += aporte;
+        totalInvestido += aporte;
+    }
+
+    if (mes === mesesAporte) {
+
+        patrimonioFimAportes =
+            patrimonio;
+    }
+
+    if (mes % 12 === 0) {
+
+        patrimonioAnual.push(
+            patrimonio
+        );
+
+        investidoAnual.push(
+            totalInvestido
+        );
+    }
+}
+
+const juros =
+    patrimonio - totalInvestido;
+
+const crescimentoSemAportes =
+    patrimonio - patrimonioFimAportes;
+
+document.getElementById(
+    "totalInvestido"
+).innerText = dinheiro(totalInvestido);
+
+document.getElementById(
+    "juros"
+).innerText = dinheiro(juros);
+
+document.getElementById(
+    "final"
+).innerText = dinheiro(patrimonio);
+
+document.getElementById(
+    "patrimonioFimAportes"
+).innerText =
+    dinheiro(patrimonioFimAportes);
+
+document.getElementById(
+    "patrimonioFinalAvancado"
+).innerText =
+    dinheiro(patrimonio);
+
+document.getElementById(
+    "crescimentoSemAportes"
+).innerText =
+    dinheiro(crescimentoSemAportes);
+
+document.getElementById(
+    "destaqueAvancado"
+).style.display = "block";
+
+criarGrafico(
+    patrimonioAnual,
+    investidoAnual
+);
+
+criarTabela(
+    patrimonioAnual,
+    investidoAnual
+);
+
+}
+
+function criarGrafico(
+patrimonios,
+investidos
+) {
+
+const canvas =
+    document.getElementById("grafico");
+
+const ctx =
+    canvas.getContext("2d");
+
+const largura =
+    canvas.clientWidth;
+
+const altura =
+    canvas.clientHeight;
+
+if (!largura || !altura) {
+    return;
+}
+
+const dpr =
+    Math.max(
+        1,
+        Math.min(
+            window.devicePixelRatio || 1,
+            3
+        )
+    );
+
+canvas.width =
+    Math.round(largura * dpr);
+
+canvas.height =
+    Math.round(altura * dpr);
+
+ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+);
+
+ctx.clearRect(
+    0,
+    0,
+    largura,
+    altura
+);
+
+const margemEsquerda =
+    largura < 400 ? 55 : 65;
+
+const margemDireita = 15;
+const margemTopo = 20;
+const margemBaixo = 45;
+
+const graficoLargura =
+    largura -
+    margemEsquerda -
+    margemDireita;
+
+const graficoAltura =
+    altura -
+    margemTopo -
+    margemBaixo;
+
+const maior =
+    Math.max(
+        1,
+        ...patrimonios,
+        ...investidos
+    );
+
+const escala = maior;
+const linhas = 5;
+
+ctx.strokeStyle = "#e5e7eb";
+ctx.lineWidth = 1;
+
+for (
+    let i = 0;
+    i <= linhas;
+    i++
+) {
+
+    const y =
+        margemTopo +
+        (i / linhas) *
+        graficoAltura;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        margemEsquerda,
+        y
+    );
+
+    ctx.lineTo(
+        largura - margemDireita,
+        y
+    );
+
+    ctx.stroke();
+
+    const valor =
+        escala -
+        (
+            escala *
+            i /
+            linhas
+        );
+
+    ctx.fillStyle = "#666";
+    ctx.font = "10px Arial";
+    ctx.textAlign = "right";
+
+    ctx.fillText(
+        dinheiroCurto(valor),
+        margemEsquerda - 7,
+        y + 4
+    );
+}
+
+ctx.fillStyle = "#666";
+ctx.font = "10px Arial";
+ctx.textAlign = "center";
+
+const quantidade =
+    patrimonios.length;
+
+const divisor =
+    Math.max(
+        1,
+        quantidade - 1
+    );
+
+patrimonios.forEach(
+    (valor, index) => {
+
+        const x =
+            quantidade === 1
+            ? margemEsquerda +
+              graficoLargura / 2
+            : margemEsquerda +
+              (
+                index /
+                divisor
+              ) *
+              graficoLargura;
+
+        ctx.fillText(
+            "Ano " + index,
+            x,
+            altura - 15
+        );
+    }
+);
+
+function desenharLinha(
+    valores,
+    linhaCor,
+    pontCor
+) {
+
+    if (!valores.length) {
+        return;
+    }
+
+    const divisor =
+        Math.max(
+            1,
+            valores.length - 1
+        );
+
+    ctx.beginPath();
+
+    valores.forEach(
+        (valor, index) => {
+
+            const x =
+                valores.length === 1
+                ? margemEsquerda +
+                  graficoLargura / 2
+                : margemEsquerda +
+                  (
+                    index /
+                    divisor
+                  ) *
+                  graficoLargura;
+
+            const y =
+                margemTopo +
+                graficoAltura -
+                (
+                    valor /
+                    escala
+                ) *
+                graficoAltura;
+
+            if (index === 0) {
+
+                ctx.moveTo(x, y);
+
+            } else {
+
+                ctx.lineTo(x, y);
+            }
+        }
+    );
+
+    ctx.strokeStyle = linhaCor;
+    ctx.lineWidth = 3;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+
+    ctx.stroke();
+
+    valores.forEach(
+        (valor, index) => {
+
+            const x =
+                valores.length === 1
+                ? margemEsquerda +
+                  graficoLargura / 2
+                : margemEsquerda +
+                  (
+                    index /
+                    divisor
+                  ) *
+                  graficoLargura;
+
+            const y =
+                margemTopo +
+                graficoAltura -
+                (
+                    valor /
+                    escala
+                ) *
+                graficoAltura;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                3.5,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle = pontCor;
+            ctx.fill();
+        }
+    );
+}
+
+desenharLinha(
+    investidos,
+    "#777",
+    "#777"
+);
+
+desenharLinha(
+    patrimonios,
+    "#2563eb",
+    "#2563eb"
+);
+
+}
+
+function dinheiroCurto(valor) {
+
+if (valor >= 1000000000) {
+
+    return (
+        "R$ " +
+        (
+            valor /
+            1000000000
+        ).toFixed(1) +
+        " bi"
+    );
+}
+
+if (valor >= 1000000) {
+
+    return (
+        "R$ " +
+        (
+            valor /
+            1000000
+        ).toFixed(1) +
+        " mi"
+    );
+}
+
+if (valor >= 1000) {
+
+    return (
+        "R$ " +
+        (
+            valor /
+            1000
+        ).toFixed(0) +
+        " mil"
+    );
+}
+
+return dinheiro(valor);
+
+}
+
+function criarTabela(
+patrimonios,
+investidos
+) {
+
+const tabela =
+    document.getElementById("tabela");
+
+tabela.innerHTML = "";
+
+patrimonios.forEach(
+    (patrimonio, index) => {
+
+        const investido =
+            investidos[index] || 0;
+
+        const juros =
+            patrimonio - investido;
+
+        const linha =
+            document.createElement("tr");
+
+        linha.innerHTML = `
+            <td>${index}</td>
+            <td>${dinheiro(investido)}</td>
+            <td>${dinheiro(juros)}</td>
+            <td>
+                <strong>
+                    ${dinheiro(patrimonio)}
+                </strong>
+            </td>
+        `;
+
+        tabela.appendChild(linha);
+    }
+);
+
+}
+
+document
+.getElementById("inicial")
+.addEventListener(
+"blur",
+function() {
+formatarCampoMoeda(this);
+}
+);
+
+document
+.getElementById("aporte")
+.addEventListener(
+"blur",
+function() {
+formatarCampoMoeda(this);
+}
+);
+
+window.addEventListener(
+"resize",
+() => {
+calcular();
+}
+);
+
+calcular();
+
+</script> </body> </html>
