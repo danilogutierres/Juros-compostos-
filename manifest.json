@@ -1,13 +1,9 @@
 {
-  "background_color": "#ffffff",
-  "description": "Simulador de Juros Compostos para calcular investimentos, aportes e crescimento do patrimônio.",
-  "dir": "ltr",
-  "display": "standalone",
-  {
   "name": "Simulador de Juros Compostos",
   "short_name": "Juros Compostos",
   "description": "Simulador de Juros Compostos para calcular investimentos e crescimento do patrimônio.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f3f6fa",
   "theme_color": "#111827",
